@@ -1,13 +1,19 @@
 import { useState } from "react";
 import { StyleSheet, ImageBackground, SafeAreaView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { useFonts } from "expo-font";
+import AppLoading from "expo-app-loading";
+import { StatusBar } from "expo-status-bar";
+
 import StartGameScreen from "./screens/StartGameScreen";
 import GameScreen from "./screens/GameScreen";
 import Colors from "./constants/colors";
 import GameOverScreen from "./screens/GameOverScreen";
-import { useFonts } from "expo-font";
-import AppLoading from "expo-app-loading";
 
+/**Note to make the app flip in different orientations,
+we can set this setting in the app.json file
+by setting the orientation property in his different mode: portrait, landscape
+and default */
 export default function App() {
   /**This state manage the number picked by the user.
   And initially this can be null, we could also set it to zero
@@ -82,32 +88,35 @@ export default function App() {
   }
 
   return (
-    <LinearGradient
-      colors={[Colors.primary700, Colors.accent500]}
-      style={styles.rootScreen}
-    >
-      <ImageBackground
-        source={require("./assets/images/background.png")}
-        resizeMode="cover" /**It's very likely that the image you're using 
+    <>
+      <StatusBar style="light" />
+      <LinearGradient
+        colors={[Colors.primary700, Colors.accent500]}
+        style={styles.rootScreen}
+      >
+        <ImageBackground
+          source={require("./assets/images/background.png")}
+          resizeMode="cover" /**It's very likely that the image you're using 
         is too small or too big for the screen size of the device on which 
         the app is running.And this prop controls how the image will be 
         resized if it doesn't have this same dimensions as the underlying device.
         Here I will use cover as value, which will make sure that the image always 
         covers up all the available space but not by distorting it, but instead 
         by zooming in or out*/
-        style={styles.rootScreen}
-        imageStyle={
-          styles.backgroundImage
-        } /**This style will make the background 
+          style={styles.rootScreen}
+          imageStyle={
+            styles.backgroundImage
+          } /**This style will make the background 
         image transparent to let the linear-gradient colors be visible.Note that RN 
         builds-in components are the combination of other core components of the RN 
         as we can look at the RN github repo. */
-      >
-        {/**This component ensure that the screen content is not going under the 
+        >
+          {/**This component ensure that the screen content is not going under the 
         notch and not closer to the device edges.Here the screen content*/}
-        <SafeAreaView style={styles.rootScreen}>{screen}</SafeAreaView>
-      </ImageBackground>
-    </LinearGradient>
+          <SafeAreaView style={styles.rootScreen}>{screen}</SafeAreaView>
+        </ImageBackground>
+      </LinearGradient>
+    </>
   );
 }
 /**Note that it is important Views 
